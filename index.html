@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Joyee 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', cursive;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Landing Page */
+        .landing-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Curtain Effect */
+        .curtain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 999;
+            transition: transform 3s ease-in-out;
+        }
+
+        .curtain.open {
+            transform: translateY(-100%);
+        }
+
+        /* Main Birthday Scene */
+        .birthday-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .birthday-scene.visible {
+            opacity: 1;
+        }
+
+        /* Floating Hearts */
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 20px;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Message Area */
+        .message-area {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            display: none;
+        }
+
+        .message-area.visible {
+            display: block;
+        }
+
+        .message-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Characters */
+        .characters {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 50px;
+            z-index: 5;
+        }
+
+        .boy, .girl {
+            position: relative;
+            font-size: 60px;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        .boy {
+            animation-delay: 0s;
+        }
+
+        .girl {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .cake {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            z-index: 6;
+        }
+
+        .candle {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            animation: flicker 1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateX(-50%) scale(0.95);
+            }
+        }
+
+        /* Final Message */
+        .final-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            z-index: 20;
+        }
+
+        .final-message.visible {
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .message-area {
+                width: 95%;
+                padding: 20px;
+                top: 30px;
+            }
+            
+            .message-text {
+                font-size: 16px;
+            }
+            
+            .characters {
+                bottom: 50px;
+                gap: 30px;
+            }
+            
+            .boy, .girl {
+                font-size: 40px;
+            }
+            
+            .cake {
+                font-size: 30px;
+            }
+            
+            .final-message {
+                font-size: 32px;
+                padding: 0 20px;
+            }
+        }
+
+        /* Celebration Animation */
+        .celebration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Landing Page -->
+        <div class="landing-page" id="landingPage">
+            <button class="start-button" onclick="startExperience()">
+                🎂 Start Birthday Surprise 🎂
+            </button>
+        </div>
+
+        <!-- Curtain -->
+        <div class="curtain" id="curtain"></div>
+
+        <!-- Birthday Scene -->
+        <div class="birthday-scene" id="birthdayScene">
+            <!-- Floating Hearts -->
+            <div class="hearts" id="hearts"></div>
+
+            <!-- Message Area -->
+            <div class="message-area" id="messageArea">
+                <div class="message-text" id="messageText"></div>
+            </div>
+
+            <!-- Characters -->
+            <div class="characters">
+                <div class="boy">
+                    👦
+                    <div class="cake">
+                        🎂
+                        <div class="candle" id="candle">🕯️</div>
+                    </div>
+                </div>
+                <div class="girl">👧</div>
+            </div>
+
+            <!-- Final Message -->
+            <div class="final-message" id="finalMessage">
+                Happy Birthday, Joyee! 💝
+            </div>
+
+            <!-- Celebration -->
+            <div class="celebration" id="celebration"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const messages = [
+            "Hello Joyee,",
+            "Many many happy returns of the day.",
+            "Prothom diker tomar rag ovimane annoyed holeo dhire dhire tomake kotota je valobeshe felechi bolte parbo na.",
+            "Aj tomar shuvo jonmodin.",
+            "Jani na kivabe wish korle khushi hobe but tomake chara amar din sottie oshohay.",
+            "Ami tomay chara thakte pari na.",
+            "Khub beshi valobashi tomay.",
+            "Hoyto aj samne daray wish ta korte parle khushi hotam but you know khub iccha korche joriye dhore ekta chumu khete.",
+            "Shuvo jonmodin babu.",
+            "Many many happy returns of the day.",
+            "I love you Joyee.",
+            "Tomar din ta valo katuk."
+        ];
+
+        function startExperience() {
+            // Hide landing page and start curtain animation
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('curtain').classList.add('open');
+            
+            // Show birthday scene after curtain opens
+            setTimeout(() => {
+                document.getElementById('birthdayScene').classList.add('visible');
+                createFloatingHearts();
+                
+                // Start message sequence
+                setTimeout(() => {
+                    showMessageArea();
+                    typeMessages();
+                }, 1000);
+            }, 3000);
+        }
+
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['💖', '💕', '💗', '💓', '💝', '💟'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }, 800);
+        }
+
+        function showMessageArea() {
+            document.getElementById('messageArea').classList.add('visible');
+        }
+
+        function typeMessages() {
+            if (currentStep < messages.length) {
+                const messageElement = document.getElementById('messageText');
+                const currentMessage = messages[currentStep];
+                
+                // Add new message
+                const newParagraph = document.createElement('p');
+                messageElement.appendChild(newParagraph);
+                
+                typeText(newParagraph, currentMessage, () => {
+                    currentStep++;
+                    setTimeout(() => {
+                        typeMessages();
+                    }, 1000);
+                });
+            } else {
+                // All messages typed, start cake blowing sequence
+                setTimeout(() => {
+                    blowCandle();
+                }, 2000);
+            }
+        }
+
+        function typeText(element, text, callback) {
+            let index = 0;
+            const interval = setInterval(() => {
+                element.textContent += text[index];
+                index++;
+                
+                if (index >= text.length) {
+                    clearInterval(interval);
+                    callback();
+                }
+            }, 50);
+        }
+
+        function blowCandle() {
+            const candle = document.getElementById('candle');
+            const messageArea = document.getElementById('messageArea');
+            
+            // Animate candle blowing out
+            candle.style.transition = 'opacity 1s ease-out';
+            candle.style.opacity = '0';
+            
+            // Hide message area
+            setTimeout(() => {
+                messageArea.style.transition = 'opacity 1s ease-out';
+                messageArea.style.opacity = '0';
+                
+                // Show final message and celebration
+                setTimeout(() => {
+                    showFinalMessage();
+                    createCelebration();
+                }, 1000);
+            }, 1000);
+        }
+
+        function showFinalMessage() {
+            document.getElementById('finalMessage').classList.add('visible');
+        }
+
+        function createCelebration() {
+            const celebration = document.getElementById('celebration');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    celebration.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
